@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Authorization - Common
+  description: Common parameters and components used in our systems
+servers:
+  - url: https://example.com # Production
+security:
+  - BearerAuth: []
+paths:
+  /public/v1/get_perm/{permission}:
+    parameters:
+      - $ref: "#/components/parameters/permission"
+    get:
+      operationId: get_perm
+      summary: |
+        Get all permissions
+      tags:
+        - Permissions
+      responses:
+        "200":
+          description: List of permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Permission"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    permission:
+      required: true
+      in: path
+      name: permission
+      schema:
+        $ref: "#/components/schemas/Permission"
+
+  schemas:
+    Permission:
+      required:
+        - name
+      description: |
+        Permissions for actions users can take within Our systems.
+      properties:
+        name:
+          type: string
+          description: |
+              One of many.
+          enum:
+            - enum: [THING_CAN_READ]
+              description: Can read a thing
+            - enum: [THING_CAN_WRITE]
+              description: Can write a new thing
+            - enum: [THING_CAN_UPDATE]
+              description: Can update thing
+            - enum: [AUTH_USERROLES_ATTRIBUTE]
+              description: Can alter user roles
+            - enum: [AUTH_AUTHMODEL_UPDATE]
+              description: Can alter auth model

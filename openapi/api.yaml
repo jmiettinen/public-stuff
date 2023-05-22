@@ -51,7 +51,7 @@ components:
           type: string
           description: |
               One of many.
-          enum:
+          oneOf: 
             - enum: [THING_CAN_READ]
               description: Can read a thing
             - enum: [THING_CAN_WRITE]
@@ -62,3 +62,4 @@ components:
               description: Can alter user roles
             - enum: [AUTH_AUTHMODEL_UPDATE]
               description: Can alter auth model
+
